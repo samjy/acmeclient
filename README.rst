@@ -61,7 +61,7 @@ Installation
 
 Right now::
 
-  git clone $REPO
+  git clone https://github.com/samjy/acmeclient.git
   pip install -r requirements.txt
 
 Testing
@@ -120,8 +120,8 @@ Example configuration file
   name: testing
 
   # --- ACME provider ---
-  server: 'https://acme-v01.api.letsencrypt.org/directory'
-  #server: 'https://acme-staging.api.letsencrypt.org/directory'
+  #server: 'https://acme-v01.api.letsencrypt.org/directory'
+  server: 'https://acme-staging.api.letsencrypt.org/directory'
 
   # --- working directory ---
   output_dir: 'data/{name}'
@@ -133,6 +133,7 @@ Example configuration file
 
   # --- certificate configuration ---
   # private key
+  key_size: 4096
   private_key_file: '{name}.pkey.pem'
   # domains for the certificate (SANs)
   domains:
@@ -171,6 +172,9 @@ Configuration fields
 :client_key_size: Size of client key
 
 :email: Email associated to the account
+
+:key_size: Size of certificate key. If the key exists, it doesn't change
+           anything
 
 :private_key_file: Private key. If file doesn't exist, a new private key is
                    generated.

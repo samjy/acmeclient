@@ -143,9 +143,12 @@ Example configuration file
 
   # --- output config ---
   csr_file: '{name}.csr.pem'
-  crt_file: '{name}.{date}.cert.crt'
-  chain_file: '{name}.{date}.chain.crt'
-  chained_crt_file: '{name}.{date}.chained_cert.crt'
+  crt_file: '{name}.{date}.crt.pem'
+  crt_symlink: '{name}.crt.pem'
+  chain_file: '{name}.{date}.chain.pem'
+  chain_symlink: '{name}.chain.pem'
+  chained_crt_file: '{name}.{date}.chained_crt.pem'
+  chained_crt_symlink: '{name}.chained_crt.pem'
 
   # --- challenger ---
   challenger_class: 'acmeclient.ovh_challenger.OVHDns01Challenger'
@@ -186,9 +189,15 @@ Configuration fields
 
 :crt_file: Certificate file. Certificate will be written at this path.
 
+:crt_symlink: Symlink to last certificate file.
+
 :chain_file: Chain file. Where to write the certificate chain.
 
+:chain_symlink: Symlink to last chain file.
+
 :chained_crt_file: Where to write certificate plus chain.
+
+:chained_crt_symlink: Symlink to last chained certificate file.
 
 :challenger_class: The path to a python object able to answer an ACME challenge.
 

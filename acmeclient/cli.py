@@ -175,15 +175,37 @@ def get_cert(client, config):
         # save the crt
         open(crt_filename, 'w').write(crt)
 
+    crt_symlink = make_filename(config.get('crt_symlink'), config, now)
+    if crt_filename and crt_symlink:
+        if os.path.exists(crt_symlink):
+            os.remove(crt_symlink)
+
+        os.symlink(crt_filename, crt_symlink)
+
     chain_filename = make_filename(config.get('chain_file'), config, now)
     if chain_filename:
         open(chain_filename, 'w').write('\n'.join(chain))
+
+    chain_symlink = make_filename(config.get('chain_symlink'), config, now)
+    if chain_filename and chain_symlink:
+        if os.path.exists(chain_symlink):
+            os.remove(chain_symlink)
+
+        os.symlink(chain_filename, chain_symlink)
 
     chained_crt_filename = make_filename(config.get('chained_crt_file'),
                                          config, now)
     if chained_crt_filename:
         pems = [crt] + chain
         open(chained_crt_filename, 'w').write('\n'.join(pems))
+
+    chained_crt_symlink = make_filename(config.get('chained_crt_symlink'),
+                                        config, now)
+    if chained_crt_filename and chained_crt_symlink:
+        if os.path.exists(chained_crt_symlink):
+            os.remove(chained_crt_symlink)
+
+        os.symlink(chained_crt_filename, chained_crt_symlink)
 
     return crt, chain
 

@@ -99,7 +99,7 @@ def get_authorization(client, domain):
     """Get autorization object
     """
     return client.request_domain_challenges(
-        domain, new_authz_uri=client.directory.new_authz)
+        domain, new_authzr_uri=client.directory.new_authz)
 
 
 def get_challenge(authorization, challenge_type=None):

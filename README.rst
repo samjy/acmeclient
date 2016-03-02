@@ -164,7 +164,7 @@ Configuration fields
 
 :output_dir: (optional) Path to the output directory. Will contain client_file
              and all keys and certificates files.
-             If not given, ``$PWD`` is used
+             If not given, ``$HOME`` is used
 
 :client_file: A yaml file which will be used to save the client key, and other
               client config

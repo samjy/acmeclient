@@ -51,9 +51,9 @@ def make_filename(tmpl, config, now=None):
     data.update(config)
 
     filename = tmpl.format(**data)
-    outdir = config.get('output_dir')
+    outdir = config.get('output_dir', '~')
     if outdir:
-        path = outdir.format(**data)
+        path = os.path.expanduser(outdir.format(**data))
         if not os.path.exists(path):
             # create dir
             os.makedirs(path)

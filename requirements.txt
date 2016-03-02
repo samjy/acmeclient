@@ -5,3 +5,4 @@ docopt
 ovh
 pyflakes
 tabulate
+pyyaml

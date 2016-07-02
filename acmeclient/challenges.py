@@ -18,6 +18,13 @@ def nopadding(s):
     return re.sub('=*$', '', s)
 
 
+DNS_SERVERS = [
+    # google
+    '8.8.8.8',
+    '8.8.4.4',
+]
+
+
 @acme.challenges.ChallengeResponse.register
 class DNS01Response(acme.challenges.KeyAuthorizationChallengeResponse):
     typ = "dns-01"
@@ -27,13 +34,17 @@ class DNS01Response(acme.challenges.KeyAuthorizationChallengeResponse):
     def simple_verify(self, chall, domain, account_public_key, **unused_kwargs):
         """Simple verify.
         """
+        # get a dns resolver
+        resolver = dns.resolver.Resolver()
+        resolver.nameservers = DNS_SERVERS
+
         signature = nopadding(base64.urlsafe_b64encode(hashlib.sha256(
             self.key_authorization
         ).digest()))
         logger.info("Domain %s: looking for %s", domain, signature)
         for i in range(10):
             # keep looping to get refreshed DNS values
-            dns_results = dns.resolver.query(
+            dns_results = resolver.query(
                 chall.validation_domain_name(domain),
                 'TXT',
             )

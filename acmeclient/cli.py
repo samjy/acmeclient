@@ -137,7 +137,7 @@ def get_csr(config):
         return open(csr_filename, 'r').read()
 
     private_key = get_private_key(config)
-    pem, der = utils.generate_csr(private_key, *config.get('domains', []))
+    pem = utils.generate_csr(private_key, *config.get('domains', []))
     # save it
     open(csr_filename, 'w').write(pem)
     return pem

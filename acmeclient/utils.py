@@ -15,7 +15,7 @@ import pytz
 import acme.jose
 import acme.client
 import acme.messages
-import letsencrypt.crypto_util as crypto_util
+import acme.crypto_util
 
 ACME_SERVER_STAGING = 'https://acme-staging.api.letsencrypt.org/directory'
 ACME_SERVER_PROD = 'https://acme-v01.api.letsencrypt.org/directory'
@@ -47,8 +47,8 @@ def generate_client_key(key_size=4096, public_exponent=65537):
 def generate_csr(private_key, *domains):
     """Generate certificate signing request
     """
-    pem, der = crypto_util.make_csr(private_key, domains)
-    return pem, der
+    pem = acme.crypto_util.make_csr(private_key, domains)
+    return pem
 
 
 def get_acme_client(key,

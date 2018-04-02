@@ -7,7 +7,7 @@ import re
 import logging
 
 import dns.resolver
-import acme.jose
+import josepy as jose
 import acme.challenges
 import time
 
@@ -29,7 +29,7 @@ DNS_SERVERS = [
 class DNS01Response(acme.challenges.KeyAuthorizationChallengeResponse):
     typ = "dns-01"
 
-    validation = acme.jose.Field("validation", decoder=acme.jose.JWS.from_json)
+    validation = jose.Field("validation", decoder=jose.JWS.from_json)
 
     def simple_verify(self, chall, domain, account_public_key, **unused_kwargs):
         """Simple verify.

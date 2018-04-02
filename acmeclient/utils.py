@@ -12,7 +12,7 @@ from cryptography.hazmat.primitives.asymmetric import rsa
 import OpenSSL
 import requests
 import pytz
-import acme.jose
+import josepy as jose
 import acme.client
 import acme.messages
 import acme.crypto_util
@@ -37,7 +37,7 @@ def generate_private_key(key_size=4096):
 def generate_client_key(key_size=4096, public_exponent=65537):
     """Generate a client key
     """
-    return acme.jose.JWKRSA(key=rsa.generate_private_key(
+    return jose.JWKRSA(key=rsa.generate_private_key(
         public_exponent=public_exponent,
         key_size=key_size,
         backend=default_backend(),
@@ -204,7 +204,7 @@ def get_crt(client, csr, authorizations):
     """
     logger.info("Poll and request certificate issuance")
     try:
-        wrapped_csr = acme.jose.ComparableX509(
+        wrapped_csr = jose.ComparableX509(
             OpenSSL.crypto.load_certificate_request(
                 OpenSSL.crypto.FILETYPE_PEM, csr))
         certr, _ = client.poll_and_request_issuance(
@@ -265,7 +265,7 @@ def revoke_crt(client, crt):
     """
     # TODO get a thumbprint or something?
     logger.info("Revoking certificate")
-    wrapped_crt = acme.jose.ComparableX509(
+    wrapped_crt = jose.ComparableX509(
         OpenSSL.crypto.load_certificate(
             OpenSSL.crypto.FILETYPE_PEM, crt))
     client.revoke(wrapped_crt)

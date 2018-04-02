@@ -6,3 +6,4 @@ ovh
 pyflakes
 tabulate
 pyyaml
+josepy

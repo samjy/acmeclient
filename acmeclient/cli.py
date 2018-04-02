@@ -28,6 +28,7 @@ import logging
 import yaml
 import docopt
 import acme
+import josepy as jose
 
 import utils
 import challengers
@@ -98,7 +99,7 @@ def get_client(config):
         )
     else:
         # load the key
-        key = acme.jose.JWK.json_loads(raw_key)
+        key = jose.JWK.json_loads(raw_key)
 
     client = utils.get_acme_client(
         key,

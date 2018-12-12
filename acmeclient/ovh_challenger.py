@@ -91,7 +91,13 @@ class OVHDns01Challenger(Dns01Challenger):
         logger.debug("  challenge value: %s", validation)
         selector, root_name, tld_name = fulldomain.rsplit('.', 2)
         root_domain = "%s.%s" % (root_name, tld_name)
-        _id = set_record(self.ovh_client, root_domain, selector, validation)
+        max_retries = 3
+        nb = 0
+        _id = None
+        while not _id and nb < max_retries:
+            nb += 1
+            _id = set_record(self.ovh_client, root_domain, selector, validation)
+
         if not _id:
             raise Exception("Didn't manage to set record")
         self.created.setdefault(root_domain, []).append(_id)
